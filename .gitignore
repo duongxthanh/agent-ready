@@ -1,0 +1,9 @@
+node_modules/
+dist/
+*.log
+.superpowers/
+
+# internal scaffolding — kept locally, not shipped publicly
+docs/superpowers/
+docs/demo-script.md
+docs/PUBLISH-CHECKLIST.md

@@ -1,0 +1,3 @@
+# Fixture Site
+
+> A static fixture site used for tests.

@@ -1,0 +1,7 @@
+# Driftwood Coffee Roasters
+
+> Small-batch specialty coffee roaster and café — single-origin beans roasted on-site, open daily.
+
+## Key pages
+- [Our coffees](https://driftwood.example/coffees)
+- [Visit the café](https://driftwood.example/visit)
