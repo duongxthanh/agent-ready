@@ -17,6 +17,6 @@ describe('SKILL.md', () => {
     expect(skill).toContain('Preventive');
     expect(skill.toLowerCase()).toContain('approve');
     expect(skill.toLowerCase()).toContain('re-scan');
-    expect(skill).toContain('agent-ready <target>');
+    expect(skill).toContain('agent-visible <target>');
   });
 });

@@ -31,7 +31,7 @@ git clone https://github.com/duongxthanh/agent-ready
 cd agent-ready
 npm install
 npm run build          # tsc → dist/
-npm link               # optional: puts `agent-ready` on your PATH
+npm link               # optional: puts `agent-visible` on your PATH
 ```
 
 ## Before you open a PR

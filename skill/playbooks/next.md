@@ -11,7 +11,7 @@ is `'use client'` with content fetched in `useEffect`, so the initial HTML is em
 - Pages Router: is the page using `getStaticProps`/`getServerSideProps`, or is data
   fetched in the browser?
 - Check the built/served HTML for the actual text — `view-source` or
-  `agent-ready <url> --json`.
+  `agent-visible <url> --json`.
 
 ## Fix
 

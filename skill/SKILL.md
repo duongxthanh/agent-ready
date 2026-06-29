@@ -6,7 +6,7 @@ description: Use when a developer wants to make a website agent-ready — findab
 # agent-ready
 
 Make a website **readable by AI agents** and **prove** it. Every score comes from the
-deterministic core (the `agent-ready` CLI), never from your own judgment — this is the
+deterministic core (the `agent-visible` CLI), never from your own judgment — this is the
 anti-hallucination guarantee. **You reason and fix; the core measures.**
 
 AI answer engines like ChatGPT and Perplexity crawl with bots (GPTBot, ClaudeBot,
@@ -17,9 +17,9 @@ those bots actually receive and closes the gap.
 
 ## Prerequisite
 
-Install the scanner once so `agent-ready` is on PATH (run in the agent-ready repo):
+Install the scanner once so `agent-visible` is on PATH (run in the agent-ready repo):
 `npm install && npm run build && npm link`
-Then invoke it anywhere as `agent-ready <target> --json`. (Without `npm link`, run it
+Then invoke it anywhere as `agent-visible <target> --json`. (Without `npm link`, run it
 from the repo as `node dist/cli.js <target> --json`.)
 
 ## The rubric (v2 — total 100, transparent in `src/rubric.ts`)
@@ -57,7 +57,7 @@ Within Retrofit, choose how deep to fix:
    folder (`./dist`). Prefer a running dev server or a built folder. Do NOT auto-build
    an unfamiliar repo without explicit permission — building runs arbitrary code.
 
-2. **Scan (deterministic).** Run `agent-ready <target> --json` and parse the `Report`.
+2. **Scan (deterministic).** Run `agent-visible <target> --json` and parse the `Report`.
    Report the score, grade, `stack` (framework/rendering), and every failing/warning
    check with its `fix` text. Do not invent findings beyond the Report.
 
@@ -76,13 +76,13 @@ Within Retrofit, choose how deep to fix:
 
 5. **Apply** only the approved groups.
 
-6. **Re-scan to prove it.** Run `agent-ready <target> --json` again and show the
+6. **Re-scan to prove it.** Run `agent-visible <target> --json` again and show the
    before → after delta — the new score and which checks flipped to pass. This closing
    proof is the whole point; never claim a fix worked without re-scanning.
 
 ## Generators (deterministic — import from the built package)
 
-From `agent-ready`'s `dist/index.js` (or `src/index.ts`):
+From the package's `dist/index.js` (or `src/index.ts`):
 - `generateRobotsTxt({ sitemapUrl, contentSignals: { search, aiInput, aiTrain } })`
 - `generateSitemap(urls: string[])`
 - `generateLlmsTxt({ title, summary, links })`

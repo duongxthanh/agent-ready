@@ -61,5 +61,5 @@ SPA hydrates normally for users.
 
 ## Verify
 
-Re-scan: `agent-ready <build-folder-or-url> --json`. Readability should jump toward
+Re-scan: `agent-visible <build-folder-or-url> --json`. Readability should jump toward
 35/35 (`re-has-text`, `re-not-spa-shell`, `re-has-headings`, `re-semantic` all pass).

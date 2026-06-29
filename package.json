@@ -1,9 +1,9 @@
 {
-  "name": "agent-ready",
+  "name": "agent-visible",
   "version": "0.1.0",
   "description": "Scan, score, and fix your website's agent-readiness — then prove the fix worked.",
   "keywords": [
-    "agent-readiness", "aeo", "geo", "llms-txt", "seo", "ai-crawler",
+    "agent-readiness", "agent-visible", "aeo", "geo", "llms-txt", "seo", "ai-crawler",
     "gptbot", "claudebot", "schema-org", "json-ld", "claude-code", "cli"
   ],
   "homepage": "https://github.com/duongxthanh/agent-ready#readme",
@@ -13,7 +13,7 @@
   "type": "module",
   "license": "MIT",
   "engines": { "node": ">=20" },
-  "bin": { "agent-ready": "dist/cli.js" },
+  "bin": { "agent-visible": "dist/cli.js" },
   "main": "dist/index.js",
   "files": ["dist", "skill", "README.md", "LICENSE"],
   "scripts": {

@@ -30,7 +30,7 @@ describe('cli', () => {
   it('prints usage and exits 0 for --help', async () => {
     const code = await main(['--help']);
     expect(code).toBe(0);
-    expect(out.join('\n')).toContain('Usage: agent-ready');
+    expect(out.join('\n')).toContain('Usage: agent-visible');
   });
 
   it('handles an unknown flag cleanly (exit 2, no throw)', async () => {
@@ -38,7 +38,7 @@ describe('cli', () => {
     vi.spyOn(console, 'error').mockImplementation((m?: unknown) => { err.push(String(m)); });
     const code = await main(['--bogus']);
     expect(code).toBe(2);
-    expect(err.join('\n')).toContain('Usage: agent-ready');
+    expect(err.join('\n')).toContain('Usage: agent-visible');
   });
 
   it('reports rubricVersion 2 and a stack profile', async () => {

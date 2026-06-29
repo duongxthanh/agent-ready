@@ -7,20 +7,26 @@
 - **git**
 - *(Optional)* Claude Code, if you want the guided fix workflow as a skill.
 
-## 2. Install (from source)
-> Not on npm yet — install from the repo.
+## 2. Install
 
+The fastest path — no install, straight from npm (published as **`agent-visible`**):
+```bash
+npx agent-visible            # prints usage
+```
+
+Or install the command globally:
+```bash
+npm install -g agent-visible
+agent-visible                # prints usage
+```
+
+From source (for development / contributing):
 ```bash
 git clone https://github.com/duongxthanh/agent-ready.git
 cd agent-ready
 npm install
 npm run build
-npm link        # makes the `agent-ready` command available everywhere
-```
-
-Verify:
-```bash
-agent-ready            # prints usage
+npm link        # makes the `agent-visible` command available everywhere
 ```
 
 ## 3. Scan your project
@@ -28,20 +34,20 @@ Point it at **any one** of these — pick what you have:
 
 ```bash
 # a) Your live/staging site
-agent-ready https://your-site.com
+agent-visible https://your-site.com
 
 # b) Your local dev server (start it first: npm run dev)
-agent-ready http://localhost:3000
+agent-visible http://localhost:3000
 
 # c) Your production build output (before you deploy)
 npm run build                 # in YOUR project → produces e.g. dist/ or build/
-agent-ready ./dist
+agent-visible ./dist
 ```
 
 Machine-readable output for CI/scripts:
 ```bash
-agent-ready ./dist --json
-agent-ready https://your-site.com --markdown
+agent-visible ./dist --json
+agent-visible https://your-site.com --markdown
 ```
 
 ### Example output
@@ -86,7 +92,7 @@ Then, in a Claude Code session inside your project, just say:
 
 > "Make this site agent-ready" — or — "agent-ready: scan my localhost:3000 and fix what's safe"
 
-The skill will: locate your site → run `agent-ready … --json` → propose
+The skill will: locate your site → run `agent-visible … --json` → propose
 
 - 🟢 **no-code fixes** (`robots.txt` + Content-Signal, `sitemap.xml`, `llms.txt`, JSON-LD),
 - 🟡 **`<head>` fixes** (title, meta description, Open Graph, `lang`, canonical, JSON-LD `<script>`),

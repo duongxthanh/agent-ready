@@ -4,7 +4,7 @@
 
 ### Is your website invisible to ChatGPT?
 
-[![npm](https://img.shields.io/npm/v/agent-ready?color=cb3837&logo=npm)](https://www.npmjs.com/package/agent-ready)
+[![npm](https://img.shields.io/npm/v/agent-visible?color=cb3837&logo=npm)](https://www.npmjs.com/package/agent-visible)
 [![CI](https://img.shields.io/github/actions/workflow/status/duongxthanh/agent-ready/ci.yml?branch=master&logo=github&label=tests)](https://github.com/duongxthanh/agent-ready/actions)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Claude Code skill](https://img.shields.io/badge/Claude%20Code-skill-d97757)](skill/SKILL.md)
@@ -20,7 +20,7 @@ you what they actually receive, scores it against a <b>transparent rubric</b>, f
 <!-- A short demo GIF can drop in here later; the transcript below is the real output of `node dist/cli.js ./demo/before` and `./demo/after`. -->
 
 ```console
-$ npx agent-ready ./demo/before
+$ npx agent-visible ./demo/before
 agent-ready · rubric v2 · vite-react/spa
 Agent-Readiness: Score: 33/100  (F)
   Access 15/15 · Permission 7/15 · Readability 0/35 · Understandability 11/25 · Discoverability 0/10
@@ -29,7 +29,7 @@ Agent-Readiness: Score: 33/100  (F)
 
 # …apply the fixes (pre-render content + generate robots.txt / sitemap.xml / llms.txt / JSON-LD)…
 
-$ npx agent-ready ./demo/after
+$ npx agent-visible ./demo/after
 Agent-Readiness: Score: 97/100  (A)
   Access 15/15 · Permission 15/15 · Readability 35/35 · Understandability 25/25 · Discoverability 7/10
 ```
@@ -37,7 +37,7 @@ Agent-Readiness: Score: 97/100  (A)
 <sub>Reproduce it yourself — the [`demo/`](demo/) folder is committed, no network needed.</sub>
 
 ```bash
-npx agent-ready https://yoursite.com
+npx agent-visible https://yoursite.com
 ```
 
 <i>— or, in Claude Code: install the skill and just say <b>"make my site agent-ready"</b></i>
@@ -54,16 +54,18 @@ Search is moving from Google to AI assistants. Those assistants read the web wit
 
 ## Quick start
 
+> Published on npm as **`agent-visible`** (the name `agent-ready` is reserved by npm's similarity guard). Same tool — `npx agent-visible` is the command.
+
 ```bash
 # Scan any URL — no install needed
-npx agent-ready https://yoursite.com
+npx agent-visible https://yoursite.com
 
 # Machine-readable report (for CI, dashboards, scripts)
-npx agent-ready https://yoursite.com --json
+npx agent-visible https://yoursite.com --json
 
 # Works on a local dev server or a built folder too
-npx agent-ready http://localhost:3000
-npx agent-ready ./dist
+npx agent-visible http://localhost:3000
+npx agent-visible ./dist
 ```
 
 You get a graded scorecard (**A–F**), the exact points lost per check, the detected framework + rendering mode, and a priority-ordered list of fixes. Full options in the **[usage guide](docs/USAGE.md)**.
@@ -83,9 +85,9 @@ The scanner tells you *what's wrong*. The **[Claude Code skill](skill/SKILL.md)*
 > **The score is always computed by the deterministic core, never guessed by the model.** The skill is the brain that fixes; the core is the engine that proves. That separation is the whole point — you can trust the number.
 
 ```text
-$ agent-ready https://acme-spa.example   →  F (12/100)  · readability 0/35
+$ agent-visible https://acme-spa.example   →  F (12/100)  · readability 0/35
   …apply 🟢 artifacts + 🟡 head + 🔴 prerender…
-$ agent-ready https://acme-spa.example   →  A (88/100)  · readability 33/35  ✅ proven
+$ agent-visible https://acme-spa.example   →  A (88/100)  · readability 33/35  ✅ proven
 ```
 
 ## What it checks — rubric v2 (total 100)

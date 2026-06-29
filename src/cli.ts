@@ -20,7 +20,7 @@ export function isDirectRun(metaUrl: string, argv1: string | undefined): boolean
   }
 }
 
-const USAGE = 'Usage: agent-ready <url|folder> [--json] [--markdown] [--ua <name>] [--help]';
+const USAGE = 'Usage: agent-visible <url|folder> [--json] [--markdown] [--ua <name>] [--help]';
 
 async function profileStack(target: string, fetched: FetchResult): Promise<StackProfile> {
   if (fetched.mode === 'folder') {
@@ -46,7 +46,7 @@ export async function main(argv: string[]): Promise<number> {
     });
   } catch (e) {
     // Unknown flag / bad value: report cleanly instead of dumping a stack trace.
-    console.error(`agent-ready: ${e instanceof Error ? e.message : String(e)}`);
+    console.error(`agent-visible: ${e instanceof Error ? e.message : String(e)}`);
     console.error(USAGE);
     return 2;
   }
