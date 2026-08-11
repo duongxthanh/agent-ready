@@ -2,7 +2,7 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
-import { fetchTarget, looksLikeHtmlDoc } from '../src/fetch.js';
+import { fetchTarget, looksLikeHtmlDoc, originOf } from '../src/fetch.js';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const siteDir = join(here, 'fixtures', 'site');
@@ -61,6 +61,30 @@ describe('fetchTarget url mode', () => {
     expect(r.llmsTxt).toBeNull();
   });
 
+  it('looks for robots/sitemap/llms at the origin when the target is a sub-page', async () => {
+    // robots.txt / sitemap.xml / llms.txt live at the site root. Joining them onto the
+    // target's PATH (…/blog/post/robots.txt) always 404s, so every non-homepage URL
+    // silently lost 15 points.
+    const asked: string[] = [];
+    vi.stubGlobal('fetch', vi.fn(async (url: string) => {
+      asked.push(url);
+      const mk = (body: string) => new Response(body, { status: 200, headers: { 'content-type': 'text/plain' } });
+      if (url === 'https://example.com/robots.txt') return mk('User-agent: *\nAllow: /');
+      if (url === 'https://example.com/sitemap.xml') return mk('<urlset></urlset>');
+      if (url === 'https://example.com/llms.txt') return mk('# Site');
+      if (url === 'https://example.com/blog/post-1?ref=x') {
+        return new Response('<html><body><h1>Post</h1></body></html>', { status: 200, headers: { 'content-type': 'text/html' } });
+      }
+      return new Response('not found', { status: 404 });
+    }));
+    const r = await fetchTarget('https://example.com/blog/post-1?ref=x', { mode: 'url' });
+    expect(r.html).toContain('<h1>Post</h1>');
+    expect(r.robotsTxt).toContain('User-agent: *');
+    expect(r.sitemapXml).toContain('<urlset');
+    expect(r.llmsTxt).toContain('# Site');
+    expect(asked).not.toContain('https://example.com/blog/post-1/robots.txt');
+  });
+
   it('captures markdown-negotiation content-type', async () => {
     vi.stubGlobal('fetch', vi.fn(async (_url: string, init?: RequestInit) => {
       const accept = (init?.headers as Record<string, string> | undefined)?.['accept'] ?? '';
@@ -76,6 +100,16 @@ describe('fetchTarget url mode', () => {
   it('markdownContentType is null in folder mode', async () => {
     const r = await fetchTarget(siteDir);
     expect(r.markdownContentType).toBeNull();
+  });
+});
+
+describe('originOf', () => {
+  it('reduces any absolute URL to its origin, and leaves non-URL targets alone', () => {
+    expect(originOf('https://example.com/blog/post-1?ref=x#top')).toBe('https://example.com');
+    expect(originOf('https://example.com/')).toBe('https://example.com');
+    expect(originOf('https://example.com')).toBe('https://example.com');
+    expect(originOf('http://localhost:3000/app/page')).toBe('http://localhost:3000');
+    expect(originOf('./dist/')).toBe('./dist');
   });
 });
 

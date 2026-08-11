@@ -12,6 +12,18 @@ export function looksLikeHtmlDoc(body: string): boolean {
   return /^\uFEFF?\s*<(?:!doctype\s+html|html[\s/>])/i.test(body);
 }
 
+// robots.txt (RFC 9309 §2.3), sitemap.xml and llms.txt are ORIGIN-scoped: they live at the
+// site root, never under the page being scanned. Joining them onto the target's path made
+// every non-homepage URL look for /blog/post/robots.txt — a guaranteed 404 that silently
+// cost 15 points (robots 5 + content-signals 3 + sitemap 4 + llms 3).
+export function originOf(target: string): string {
+  try {
+    const { origin } = new URL(target);
+    if (origin && origin !== 'null') return origin;
+  } catch { /* not an absolute URL (folder path, bare host) — use it as given */ }
+  return target.replace(/\/$/, '');
+}
+
 async function readIfExists(path: string): Promise<string | null> {
   try { return await readFile(path, 'utf8'); } catch { return null; }
 }
@@ -43,7 +55,7 @@ export async function fetchTarget(
     };
   }
 
-  const base = target.replace(/\/$/, '');
+  const base = originOf(target);
   const fetchText = async (url: string): Promise<string | null> => {
     try {
       const res = await fetch(url, { headers: { 'user-agent': ua } });
